@@ -28,7 +28,7 @@ pub mod crudapp {
         Ok(())
     }
 
-    pub fn delete_journal_entry(_ctx: Context<DeleteEntry>) -> Result<()> {
+    pub fn delete_journal_entry(_ctx: Context<DeleteEntry>, _title: String) -> Result<()> {
         Ok(())
     }
 }

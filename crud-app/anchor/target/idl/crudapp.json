@@ -96,7 +96,12 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "_title",
+          "type": "string"
+        }
+      ]
     },
     {
       "name": "update_journal_entry",
