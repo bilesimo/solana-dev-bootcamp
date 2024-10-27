@@ -1,19 +1,19 @@
-import * as anchor from '@coral-xyz/anchor'
-import {Program} from '@coral-xyz/anchor'
-import {Keypair} from '@solana/web3.js'
-import {Crudapp} from '../target/types/crudapp'
+import * as anchor from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
+import { Keypair } from "@solana/web3.js";
+import { Crudapp } from "../target/types/crudapp";
 
-describe('crudapp', () => {
+describe("crudapp", () => {
   // Configure the client to use the local cluster.
-  const provider = anchor.AnchorProvider.env()
-  anchor.setProvider(provider)
-  const payer = provider.wallet as anchor.Wallet
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
+  const payer = provider.wallet as anchor.Wallet;
 
-  const program = anchor.workspace.Crudapp as Program<Crudapp>
+  const program = anchor.workspace.Crudapp as Program<Crudapp>;
 
-  const crudappKeypair = Keypair.generate()
+  const crudappKeypair = Keypair.generate();
 
-  it('Initialize Crudapp', async () => {
+  it("Initialize Crudapp", async () => {
     await program.methods
       .initialize()
       .accounts({
@@ -21,56 +21,80 @@ describe('crudapp', () => {
         payer: payer.publicKey,
       })
       .signers([crudappKeypair])
-      .rpc()
+      .rpc();
 
-    const currentCount = await program.account.crudapp.fetch(crudappKeypair.publicKey)
+    const currentCount = await program.account.crudapp.fetch(
+      crudappKeypair.publicKey
+    );
 
-    expect(currentCount.count).toEqual(0)
-  })
+    expect(currentCount.count).toEqual(0);
+  });
 
-  it('Increment Crudapp', async () => {
-    await program.methods.increment().accounts({ crudapp: crudappKeypair.publicKey }).rpc()
+  it("Increment Crudapp", async () => {
+    await program.methods
+      .increment()
+      .accounts({ crudapp: crudappKeypair.publicKey })
+      .rpc();
 
-    const currentCount = await program.account.crudapp.fetch(crudappKeypair.publicKey)
+    const currentCount = await program.account.crudapp.fetch(
+      crudappKeypair.publicKey
+    );
 
-    expect(currentCount.count).toEqual(1)
-  })
+    expect(currentCount.count).toEqual(1);
+  });
 
-  it('Increment Crudapp Again', async () => {
-    await program.methods.increment().accounts({ crudapp: crudappKeypair.publicKey }).rpc()
+  it("Increment Crudapp Again", async () => {
+    await program.methods
+      .increment()
+      .accounts({ crudapp: crudappKeypair.publicKey })
+      .rpc();
 
-    const currentCount = await program.account.crudapp.fetch(crudappKeypair.publicKey)
+    const currentCount = await program.account.crudapp.fetch(
+      crudappKeypair.publicKey
+    );
 
-    expect(currentCount.count).toEqual(2)
-  })
+    expect(currentCount.count).toEqual(2);
+  });
 
-  it('Decrement Crudapp', async () => {
-    await program.methods.decrement().accounts({ crudapp: crudappKeypair.publicKey }).rpc()
+  it("Decrement Crudapp", async () => {
+    await program.methods
+      .decrement()
+      .accounts({ crudapp: crudappKeypair.publicKey })
+      .rpc();
 
-    const currentCount = await program.account.crudapp.fetch(crudappKeypair.publicKey)
+    const currentCount = await program.account.crudapp.fetch(
+      crudappKeypair.publicKey
+    );
 
-    expect(currentCount.count).toEqual(1)
-  })
+    expect(currentCount.count).toEqual(1);
+  });
 
-  it('Set crudapp value', async () => {
-    await program.methods.set(42).accounts({ crudapp: crudappKeypair.publicKey }).rpc()
+  it("Set crudapp value", async () => {
+    await program.methods
+      .set(42)
+      .accounts({ crudapp: crudappKeypair.publicKey })
+      .rpc();
 
-    const currentCount = await program.account.crudapp.fetch(crudappKeypair.publicKey)
+    const currentCount = await program.account.crudapp.fetch(
+      crudappKeypair.publicKey
+    );
 
-    expect(currentCount.count).toEqual(42)
-  })
+    expect(currentCount.count).toEqual(42);
+  });
 
-  it('Set close the crudapp account', async () => {
+  it("Set close the crudapp account", async () => {
     await program.methods
       .close()
       .accounts({
         payer: payer.publicKey,
         crudapp: crudappKeypair.publicKey,
       })
-      .rpc()
+      .rpc();
 
     // The account should no longer exist, returning null.
-    const userAccount = await program.account.crudapp.fetchNullable(crudappKeypair.publicKey)
-    expect(userAccount).toBeNull()
-  })
-})
+    const userAccount = await program.account.crudapp.fetchNullable(
+      crudappKeypair.publicKey
+    );
+    expect(userAccount).toBeNull();
+  });
+});
