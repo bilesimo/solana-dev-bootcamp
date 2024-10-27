@@ -7,23 +7,23 @@ import { BankrunProvider } from "anchor-bankrun";
 
 const IDL = require("../target/idl/voting.json");
 const votingAddress = new PublicKey(
-  "6z68wfurCMYkZG51s1Et9BJEd9nJGUusjHXNt4dGbNNF"
+  "ESWnN7vnzsMpoAT6o44WYNmPAPBu6cToQZMTci1bQ7fH"
 );
 
 describe("Voting", () => {
   let context;
   let provider;
-  let votingProgram: Program<Voting>;
+  anchor.setProvider(anchor.AnchorProvider.env());
+  let votingProgram = anchor.workspace.Voting as Program<Voting>;
 
   beforeAll(async () => {
-    context = await startAnchor(
+    /*context = await startAnchor(
       "",
       [{ name: "voting", programId: votingAddress }],
       []
     );
     provider = new BankrunProvider(context);
-
-    votingProgram = new Program<Voting>(IDL, provider);
+    votingProgram = new Program<Voting>(IDL, provider); */
   });
 
   it("Initialize Poll", async () => {
